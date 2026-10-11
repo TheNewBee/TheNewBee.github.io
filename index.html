@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="John Yuen, backend engineer. Java, low-latency trading systems, and LLM agent tooling.">
+<!--head-end-->
+<title>John Yuen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Literata:opsz,wght@7..72,400;7..72,500&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column with a left rail of section labels; each case study pairs a measured figure with its story. */
+:root {
+  color-scheme: light;
+  --paper: #eef1f3;
+  --panel: #e3e8ec;
+  --ink: #15222c;
+  --muted: #56646f;
+  --rule: #c9d1d8;
+  --signal: #a85f00;
+  --font-display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Literata", Georgia, "Times New Roman", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --step--1: 0.8125rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.375rem;
+  --step-2: 2rem;
+  --step-3: clamp(2.75rem, 7vw, 5.25rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #10171d;
+    --panel: #18222a;
+    --ink: #dbe3e9;
+    --muted: #93a2ad;
+    --rule: #2a3741;
+    --signal: #eaa13d;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #10171d;
+  --panel: #18222a;
+  --ink: #dbe3e9;
+  --muted: #93a2ad;
+  --rule: #2a3741;
+  --signal: #eaa13d;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 var(--step-0)/1.65 var(--font-body);
+  padding: 0 clamp(16px, 5vw, 64px);
+}
+a { color: inherit; text-decoration-color: var(--signal); text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
+a:hover { color: var(--signal); }
+a:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; border-radius: 2px; }
+.wrap { max-width: 1080px; margin: 0 auto; }
+
+/* Top bar */
+.top {
+  display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; align-items: baseline;
+  padding-block: 28px 0;
+  font: 500 var(--step--1)/1.4 var(--font-mono);
+  color: var(--muted);
+}
+.top nav { display: flex; flex-wrap: wrap; gap: 4px 20px; }
+.top a { text-decoration: none; }
+
+/* Hero */
+.hero { padding-block: clamp(48px, 9vw, 104px) 56px; display: grid; gap: 40px; }
+.hero h1 {
+  font: 700 var(--step-3)/0.95 var(--font-display);
+  letter-spacing: -0.035em;
+  margin: 0;
+  text-wrap: balance;
+}
+.hero h1 span { color: var(--muted); font-weight: 500; }
+.lede { max-width: 38rem; font-size: var(--step-1); line-height: 1.5; margin: 0; text-wrap: pretty; }
+.lede strong { font-weight: 500; }
+
+/* Order path diagram */
+.path { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding-block: 22px; display: grid; gap: 14px; }
+.path-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font: 500 var(--step--1)/1.4 var(--font-mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.path-head b { color: var(--ink); font-weight: 500; }
+.path-svg { overflow-x: auto; }
+.path svg { display: block; width: 100%; min-width: 560px; height: auto; }
+.path svg .lane { stroke: var(--rule); stroke-width: 2; fill: none; }
+.path svg .stage { fill: var(--paper); stroke: var(--ink); stroke-width: 1.5; }
+.path svg .label { fill: var(--ink); font: 600 15px var(--font-display); }
+.path svg .sub { fill: var(--muted); font: 400 11px var(--font-mono); }
+.path svg .tick { fill: var(--signal); }
+.tick { offset-path: path("M 20 40 H 740"); animation: run 2.4s cubic-bezier(.6,0,.4,1) infinite; }
+.tick.t2 { animation-delay: .8s; }
+.tick.t3 { animation-delay: 1.6s; }
+@keyframes run { from { offset-distance: 0%; } to { offset-distance: 100%; } }
+@media (prefers-reduced-motion: reduce) { .tick { animation: none; offset-distance: 50%; } .tick.t2, .tick.t3 { display: none; } }
+
+/* Sections */
+section { display: grid; grid-template-columns: 180px 1fr; gap: 24px 48px; padding-block: 56px; border-top: 1px solid var(--rule); }
+.rail { font: 500 var(--step--1)/1.4 var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+.rail h2 { font: inherit; margin: 0; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 20px); }
+.body { min-width: 0; display: grid; gap: 48px; }
+.intro { max-width: 40rem; margin: 0; color: var(--muted); }
+
+/* Case studies */
+.case { display: grid; grid-template-columns: minmax(180px, 240px) 1fr; gap: 16px 40px; }
+.fig { display: grid; gap: 6px; align-content: start; }
+.fig .num { font: 700 var(--step-2)/1.05 var(--font-display); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: var(--signal); }
+.fig .unit { font: 400 var(--step--1)/1.45 var(--font-mono); color: var(--muted); }
+.case h3 { font: 600 var(--step-1)/1.25 var(--font-display); margin: 0 0 4px; letter-spacing: -0.01em; text-wrap: balance; }
+.where { font: 500 var(--step--1)/1.4 var(--font-mono); color: var(--muted); margin: 0 0 12px; }
+.case p { margin: 0 0 12px; max-width: 38rem; }
+.case p:last-child { margin-bottom: 0; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 14px 0 0; padding: 0; list-style: none; font: 400 var(--step--1)/1.4 var(--font-mono); color: var(--muted); }
+
+/* Timeline */
+.timeline { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+.timeline li { display: grid; grid-template-columns: 9.5rem 1fr; gap: 4px 24px; padding-block: 18px; border-bottom: 1px solid var(--rule); }
+.timeline li:first-child { padding-top: 0; }
+.timeline time { font: 400 var(--step--1)/1.9 var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.timeline .role { font: 600 1.125rem/1.35 var(--font-display); }
+.timeline .role span { font-weight: 500; color: var(--muted); }
+.timeline p { margin: 4px 0 0; max-width: 38rem; }
+
+/* Project list */
+.projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 40px; }
+.proj { display: grid; gap: 6px; align-content: start; padding-top: 14px; border-top: 2px solid var(--ink); }
+.proj h3 { font: 600 1.125rem/1.3 var(--font-display); margin: 0; }
+.proj .lang { font: 400 var(--step--1)/1.4 var(--font-mono); color: var(--muted); }
+.proj p { margin: 0; }
+.proj.wide { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 16px 32px; align-items: start; }
+.proj-text { display: grid; gap: 6px; }
+.projects.minor { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.proj.wide.phone { grid-template-columns: minmax(0, 220px) minmax(0, 1fr); }
+.note { font: 400 var(--step--1)/1.5 var(--font-mono); color: var(--muted); }
+.projects.minor .proj { border-top-width: 1px; border-top-color: var(--rule); }
+.shot { margin: 0 0 8px; border: 1px solid var(--rule); background: var(--panel); line-height: 0; }
+.shot img { width: 100%; height: auto; display: block; }
+.proj.wide .shot { margin: 0; }
+.subhead { font: 600 var(--step-1)/1.25 var(--font-display); margin: 0 0 -24px; }
+
+/* Stack */
+.stack { display: grid; margin: 0; }
+.stack div { display: grid; grid-template-columns: 9.5rem 1fr; gap: 4px 24px; padding-block: 12px; border-bottom: 1px solid var(--rule); }
+.stack dt { font: 500 var(--step--1)/1.9 var(--font-mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.stack dd { margin: 0; }
+
+/* Contact */
+.contact { display: grid; gap: 20px; }
+.contact .big { font: 600 var(--step-2)/1.15 var(--font-display); letter-spacing: -0.02em; margin: 0; overflow-wrap: anywhere; }
+.links { display: flex; flex-wrap: wrap; gap: 8px 28px; font: 500 var(--step-0)/1.4 var(--font-mono); margin: 0; padding: 0; list-style: none; }
+footer { padding-block: 32px 48px; border-top: 1px solid var(--rule); font: 400 var(--step--1)/1.4 var(--font-mono); color: var(--muted); }
+
+@media (max-width: 760px) {
+  section { grid-template-columns: 1fr; padding-block: 44px; }
+  .rail h2 { position: static; }
+  .case { grid-template-columns: 1fr; }
+  .projects, .projects.minor, .proj.wide, .proj.wide.phone { grid-template-columns: 1fr; }
+  .proj.wide.phone .shot { max-width: 260px; }
+  .timeline li, .stack div { grid-template-columns: 1fr; }
+  .timeline time, .stack dt { line-height: 1.4; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <span>John Yuen &middot; Seattle, WA</span>
+  <nav aria-label="Sections">
+    <a href="#work">Work</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+    <a href="John_Yuen_CV.pdf">CV (PDF)</a>
+  </nav>
+</header>
+
+<main>
+<div class="hero">
+  <h1>John Yuen <span>builds backend systems where microseconds count.</span></h1>
+  <p class="lede">Backend engineer with <strong>5 years</strong> of Java and Spring Boot at OKX, Standard Chartered, and Blockchain Solutions. I profile before I optimize. Now studying for an M.S. in Computer Science at Northeastern University in Seattle.</p>
+
+  <figure class="path" aria-label="OKX market-data-to-order path: gateway, strategy, order. 1 microsecond p50, 8 microseconds p99.">
+    <div class="path-head">
+      <span>OKX market-data-to-order path</span>
+      <span><b>1&nbsp;µs</b> p50 &middot; <b>8&nbsp;µs</b> p99 &middot; after a 40% cut</span>
+    </div>
+    <div class="path-svg">
+      <svg viewBox="0 0 760 80" role="img" aria-hidden="true">
+        <path class="lane" d="M 20 40 H 740"/>
+        <rect class="stage" x="40" y="12" width="170" height="56" rx="3"/>
+        <text class="label" x="56" y="37">Gateway</text>
+        <text class="sub" x="56" y="55">market data in</text>
+        <rect class="stage" x="295" y="12" width="170" height="56" rx="3"/>
+        <text class="label" x="311" y="37">Strategy</text>
+        <text class="sub" x="311" y="55">lock-free hot path</text>
+        <rect class="stage" x="550" y="12" width="170" height="56" rx="3"/>
+        <text class="label" x="566" y="37">Order</text>
+        <text class="sub" x="566" y="55">to the exchange</text>
+        <circle class="tick" r="5"/>
+        <circle class="tick t2" r="5"/>
+        <circle class="tick t3" r="5"/>
+      </svg>
+    </div>
+  </figure>
+</div>
+
+<section id="work">
+  <div class="rail"><h2>Selected work</h2></div>
+  <div class="body">
+
+    <article class="case">
+      <div class="fig">
+        <div class="num">&minus;40%</div>
+        <div class="unit">order-execution latency</div>
+      </div>
+      <div>
+        <h3>Market-making order path</h3>
+        <p class="where">OKX &middot; 2024&ndash;2026</p>
+        <p>I was a market-making developer on OKX's crypto market-making team. I built the Java path from gateway to strategy to order for 3 trading desks, and I owned 24/7 incident diagnosis: CPU and memory spikes, PnL drops, IPC consumer backpressure, and server overload.</p>
+        <p>I profiled the JVM hot path and replaced locks with lock-free data structures. Order-execution latency fell 40%, to 1&nbsp;µs p50 and 8&nbsp;µs p99 from market data to order.</p>
+        <ul class="tags"><li>Java</li><li>JVM profiling</li><li>Lock-free data structures</li><li>Kafka</li></ul>
+      </div>
+    </article>
+
+    <article class="case">
+      <div class="fig">
+        <div class="num">2&ndash;4 &rarr; 1&ndash;2</div>
+        <div class="unit">critical incidents per month</div>
+      </div>
+      <div>
+        <h3>Observability platform</h3>
+        <p class="where">OKX &middot; self-initiated &middot; adopted by 3 market-making teams</p>
+        <p>I started this outside my duties, first for my own incident work. The backend is Python and FastAPI, with a Flask web UI. It matches known failures and detects new trends in the logs.</p>
+        <p>My first design changed logging inside the trading process. JMH benchmarks showed that this went over the latency budget, so I rejected it and moved the analysis off the hot path, running async. When an alert fires, the platform hands the alerted logs, related servers, and alert frequencies to a cloud agent, which starts the investigation automatically.</p>
+        <ul class="tags"><li>Python</li><li>FastAPI</li><li>Flask</li><li>JMH</li><li>Prometheus</li><li>Grafana</li><li>OpenTelemetry</li></ul>
+      </div>
+    </article>
+
+    <article class="case">
+      <div class="fig">
+        <div class="num">12</div>
+        <div class="unit">engineers across 2 market-making teams run all their development through it</div>
+      </div>
+      <div>
+        <h3>Multi-agent LLM coding harness</h3>
+        <p class="where">OKX &middot; built on the firm's AI development platform</p>
+        <p>The harness keeps long-running agent work on spec. Each development phase passes several rounds of agent review. The reviewers pull real data from test and production, such as logs, output data, and Grafana latency and memory metrics, and compare it against the change.</p>
+        <p>After review, agents write a fix plan and then fix. Every goal runs in its own Git worktree. Hooks enforce persistent memory: agents keep notes on their work, reviews, and plans, so another session can pick up where one stopped.</p>
+        <ul class="tags"><li>LLM agents</li><li>Git worktrees</li><li>Review gates</li></ul>
+      </div>
+    </article>
+
+    <article class="case">
+      <div class="fig">
+        <div class="num">&minus;90%</div>
+        <div class="unit">API latency, from an O(n²) to O(n) rewrite</div>
+      </div>
+      <div>
+        <h3>Retail stock-trading backend</h3>
+        <p class="where">Standard Chartered Bank &middot; 2023&ndash;2024</p>
+        <p>I was the sole backend developer of a Java Spring Boot system for Hong Kong retail stock trading, which handles more than 10,000 trades a day.</p>
+        <p>The holdings page recomputed cost basis and tax lots for every holding in O(n²) on each refresh. I rewrote it in O(n) with the same results: API latency fell 90% and holdings processing time fell 87%. I then fixed Spring open-in-view connection-pool exhaustion and added an Ehcache layer, which cut database load 85%.</p>
+        <p>I also led a rebuild of the notification engine. I traced the business logic through over-abstracted legacy code, then rebuilt it from scratch with the Strategy Pattern and dependency injection, so a new channel needs no core change. I wrote every test; coverage is above 90%.</p>
+        <ul class="tags"><li>Spring Boot</li><li>JPA / Hibernate</li><li>Oracle</li><li>Ehcache</li><li>Azure DevOps</li><li>Ansible</li></ul>
+      </div>
+    </article>
+
+    <article class="case">
+      <div class="fig">
+        <div class="num">13&nbsp;min &rarr; 31&nbsp;s</div>
+        <div class="unit">core workflow, 96% faster</div>
+      </div>
+      <div>
+        <h3>Client microservices</h3>
+        <p class="where">Blockchain Solutions Limited &middot; 2022&ndash;2023</p>
+        <p>I built Spring Boot microservices in Java and Kotlin for client projects, connected through RabbitMQ pub/sub, and diagnosed stuck and backpressured queues in production.</p>
+        <p>A core workflow took 13 minutes. I moved its JPA hot path to QueryDSL and JDBC batch inserts, with multi-threading, and it now runs in 31 seconds. The services ran in containers on Kubernetes with Helm, and on AWS EC2, S3, and CloudWatch. I also wrote Solidity contracts on Ethereum and Polygon.</p>
+        <ul class="tags"><li>Kotlin</li><li>RabbitMQ</li><li>QueryDSL</li><li>Kubernetes</li><li>Helm</li><li>AWS</li><li>Solidity</li></ul>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section id="experience">
+  <div class="rail"><h2>Experience</h2></div>
+  <div class="body">
+    <ol class="timeline">
+      <li>
+        <time>Nov 2024 &ndash; May 2026</time>
+        <div><div class="role">OKX <span>&middot; Software Engineer &middot; Hong Kong</span></div>
+        <p>Market-making developer on the crypto market-making team.</p></div>
+      </li>
+      <li>
+        <time>Jul 2023 &ndash; Nov 2024</time>
+        <div><div class="role">Standard Chartered Bank <span>&middot; Analyst, Development &middot; Hong Kong</span></div>
+        <p>Sole backend developer of a retail stock-trading system.</p></div>
+      </li>
+      <li>
+        <time>Jun 2022 &ndash; May 2023</time>
+        <div><div class="role">Blockchain Solutions Limited <span>&middot; Software Engineer &middot; Hong Kong</span></div>
+        <p>Backend developer for client projects in Java and Kotlin.</p></div>
+      </li>
+      <li>
+        <time>Sep 2018 &ndash; Aug 2019</time>
+        <div><div class="role">Manpower Service (HK) Limited <span>&middot; Contract Junior Programmer</span></div>
+        <p>J2EE application developer; fixed Oracle PL/SQL stored procedures.</p></div>
+      </li>
+    </ol>
+
+    <h3 class="subhead">Education</h3>
+    <ol class="timeline">
+      <li>
+        <time>Sep 2026 &ndash; May 2028</time>
+        <div><div class="role">Northeastern University <span>&middot; M.S. Computer Science &middot; Seattle</span></div>
+        <p>Expected May 2028. Fall 2026: CS5330 Computer Vision.</p></div>
+      </li>
+      <li>
+        <time>Sep 2019 &ndash; Aug 2022</time>
+        <div><div class="role">The Chinese University of Hong Kong <span>&middot; B.Eng. Information Engineering</span></div>
+        <p>Final-year project: a full-stack Ethereum dApp.</p></div>
+      </li>
+      <li>
+        <time>Sep 2016 &ndash; Jul 2018</time>
+        <div><div class="role">UOW College Hong Kong <span>&middot; A.Sc. Information Systems Development</span></div>
+        <p>Scholarship for an exchange program at the University of Turku, Finland.</p></div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="rail"><h2>Projects</h2></div>
+  <div class="body">
+    <article class="proj wide">
+      <figure class="shot"><img src="img/easy-qr-code.webp" width="1200" height="752" alt="Easy QR Code window after reading a QR code from a photo: the decoded website link with Copy and Open buttons, and a Found 1 QR code banner."></figure>
+      <div class="proj-text">
+        <h3>Easy QR Code</h3>
+        <span class="lang">C# &middot; WinUI 3 &middot; OpenCV &middot; MSIX &middot; private repo</span>
+        <p>A Windows desktop app that reads QR codes from the webcam, from photos, or from the clipboard. Decoding runs on the PC with OpenCV's detection and super-resolution models, and the package does not ask for internet access, so nothing leaves the machine.</p>
+        <p>It is packaged as MSIX for the Microsoft Store. One photo, the camera, and Copy and Open are free. A one-time $0.99 add-on unlocks folder batch reading, right-click open, and export of all links to a text file. A command-line tool shares the same decoder core, and unit tests run in CI.</p>
+      </div>
+    </article>
+
+    <article class="proj wide">
+      <figure class="shot"><img src="img/token-usage-widget.webp" width="1280" height="730" alt="Token Usage dashboard with OpenAI Codex weekly window at 63% used and Cursor billing at 25% used, with reset countdowns."></figure>
+      <div class="proj-text">
+        <h3><a href="https://github.com/johnyuencm/token-usage-widget">Token Usage Widget</a></h3>
+        <span class="lang">Node.js &middot; Electron &middot; npm package &middot; MIT</span>
+        <p>One place to see how much quota is left on AI coding tools: Codex, Cursor, Claude Code, OpenCode, OpenRouter, Kimi, Z.AI, and Grok. An always-on-top corner widget runs on Windows and macOS, and a full dashboard runs on localhost.</p>
+        <p>Install it with <code>npm i -g token-usage-widget</code> and run <code>tuw</code>. Setup finds the agents you are already signed in to and polls only the providers you turn on. Secrets stay in a per-user config file, and the server binds to localhost by default. It had 428 npm downloads in the month to 9 October 2026.</p>
+      </div>
+    </article>
+
+    <article class="proj wide phone">
+      <figure class="shot"><img src="img/travelbuddy.webp" width="735" height="1160" alt="TravelBuddy arrival tracking on iPhone: Apple Maps route through Sha Tin with 5.6 km left, 65% trip progress, next stop Admiralty, and a reminder due in 5.1 km."></figure>
+      <div class="proj-text">
+        <h3>TravelBuddy</h3>
+        <span class="lang">TypeScript &middot; React Native &middot; Expo &middot; private repo</span>
+        <p>A phone app that wakes you before your stop. Pick a destination and a reminder rule, by distance or by a share of the route estimate, and the app tracks you in the background with GPS. It alerts you as each threshold passes, and again about 200&nbsp;m before arrival. It works by car, train, bus, on foot, or any mix.</p>
+        <p>Arrival detection runs entirely on the device, and accounts are optional. iOS uses Apple MapKit through a custom native module. Android uses MapLibre with an OSRM-compatible router. Safety features watch for route deviation and unusual pace, and offer SOS actions. Release builds refuse demo or non-HTTPS map endpoints.</p>
+        <p class="note">Screenshot: a live trip on iPhone.</p>
+      </div>
+    </article>
+
+    <div class="projects">
+      <article class="proj">
+        <h3>Real-time vision filters</h3>
+        <span class="lang">C++ &middot; OpenCV &middot; ONNX &middot; CS5330</span>
+        <p>A webcam filter tool: greyscale, sepia, blur, Sobel gradients, face detection and face-only blur. It also runs the Depth Anything V2 network through ONNX on live video. Switching pixel access from <code>at()</code> to row pointers cut the 5&times;5 blur from 6.0&nbsp;ms to 2.9&nbsp;ms.</p>
+      </article>
+      <article class="proj">
+        <figure class="shot"><img src="img/net-position.webp" width="1200" height="610" alt="Web table of daily client and product net positions with a Download Output.csv button."></figure>
+        <h3><a href="https://github.com/TheNewBee/AMRO">Daily net-position service</a></h3>
+        <span class="lang">Java &middot; Kafka Streams &middot; Docker</span>
+        <p>Turns each trade record into a Kafka event and aggregates it with Kafka Streams into one sorted net-position snapshot, served as JSON, CSV, and a web UI. 717 input records collapse to five client and product rows. One script starts the whole stack.</p>
+      </article>
+      <article class="proj">
+        <figure class="shot"><img src="img/hk-easy-school.webp" width="507" height="472" alt="EducationCare school finder: a Google map of Sha Tin with a pin for each school in the district."></figure>
+        <h3>HK Easy School (搜校易)</h3>
+        <span class="lang">Python &middot; Django &middot; crawlers &middot; 2018 group project &middot; private repo</span>
+        <p>A web portal that helps parents choose a Hong Kong school. Crawlers collect school data into a database. The site shows schools on a district map, ranks them, lists school events, and pre-fills application forms. Passwords are RSA-encrypted in transit and stored as Argon2 hashes. It ran on DigitalOcean.</p>
+      </article>
+      <article class="proj">
+        <figure class="shot"><img src="img/sp500-heatmap.webp" width="1200" height="720" alt="Heatmap of S&amp;P 500 daily returns, one column per stock, red for losses and green for gains."></figure>
+        <h3><a href="https://github.com/TheNewBee/StockHeatMap">S&amp;P 500 heatmap</a></h3>
+        <span class="lang">Python &middot; yfinance &middot; seaborn</span>
+        <p>Draws a heatmap of daily returns for every S&amp;P 500 stock over recent trading days. It fetches in batches and skips missing data and bad symbols. The image is a real run from October 2026.</p>
+      </article>
+    </div>
+
+    <div class="projects minor">
+      <article class="proj">
+        <h3><a href="https://github.com/TheNewBee/OptionVolatilityDetectBot">High-IV option alert</a></h3>
+        <span class="lang">Python &middot; aiohttp &middot; pandas</span>
+        <p>Scans the S&amp;P 500 every hour with async requests. It sends an email when a stock above $10 has options with implied volatility over 150%.</p>
+      </article>
+      <article class="proj">
+        <h3>Ethereum dApp</h3>
+        <span class="lang">Solidity &middot; Node.js &middot; Flutter &middot; CUHK</span>
+        <p>Final-year project: an ERC-20 token contract in Solidity, a Node.js backend, and a Flutter front end.</p>
+      </article>
+      <article class="proj">
+        <h3><a href="https://github.com/TheNewBee/Unity-Sokoban">Sokoban</a></h3>
+        <span class="lang">C# &middot; Unity</span>
+        <p>A top-down 2D Sokoban that builds each level from an external text file.</p>
+      </article>
+      <article class="proj">
+        <h3>TripFlow</h3>
+        <span class="lang">TypeScript &middot; Next.js &middot; Prisma &middot; PostgreSQL &middot; in development &middot; private repo</span>
+        <p>A trip planner that reads like a simple travel document: day-by-day plans, links between plans that depend on each other, a map view, shared expenses across currencies, and AI enrichment with your own API key.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="rail"><h2>Stack</h2></div>
+  <div class="body">
+    <dl class="stack">
+      <div><dt>Programming</dt><dd>Java, Kotlin, Python, SQL, PL/SQL, C++ (coursework), TypeScript</dd></div>
+      <div><dt>Backend</dt><dd>Spring Boot, REST APIs, Spring Data JPA (Hibernate), QueryDSL, JDBC, FastAPI, Flask, Django</dd></div>
+      <div><dt>Data</dt><dd>Oracle, MySQL, PostgreSQL, Redis, Kafka, RabbitMQ, Ehcache</dd></div>
+      <div><dt>Cloud</dt><dd>AWS (EC2, S3, CloudWatch), Docker, Kubernetes, Helm, Nginx, Azure DevOps, Ansible, Linux</dd></div>
+      <div><dt>Performance</dt><dd>JMH, JVM tuning, GC analysis, lock-free data structures, Prometheus, Grafana, OpenTelemetry</dd></div>
+      <div><dt>Languages</dt><dd>Fluent in Cantonese, English, and Mandarin</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="rail"><h2>Contact</h2></div>
+  <div class="body contact">
+    <p class="big"><a href="mailto:johnyuen97@gmail.com">johnyuen97@gmail.com</a></p>
+    <p class="intro">Available for a co-op or internship from May to December 2027.</p>
+    <ul class="links">
+      <li><a href="John_Yuen_CV.pdf">CV (PDF)</a></li>
+      <li><a href="https://github.com/TheNewBee">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/john-yuen-91b562166">LinkedIn</a></li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer>&copy; 2026 John Yuen</footer>
+</div>
+</body>
+</html>
